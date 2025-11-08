@@ -3,23 +3,28 @@ services:
     name: matrix
     env: static
     branch: main
-    # If you have NO build step:
-    buildCommand: ""
-    publishPath: /
-    # If you DO have a build (uncomment these two and adjust):
-    # buildCommand: npm ci && npm run build
-    # publishPath: dist
-
+    buildCommand: ""      # no build
+    publishPath: /        # index.html lives at the repo root
     autoDeploy: true
 
-    # Optional headers (good caching for assets)
+    # Optional but recommended headers
     headers:
+      # Long cache for heavy assets (tweak patterns as needed)
       - path: "*.js"
         name: Cache-Control
         value: public, max-age=31536000, immutable
       - path: "*.css"
         name: Cache-Control
         value: public, max-age=31536000, immutable
-      - path: "*.png"
+      - path: "assets/*"
         name: Cache-Control
         value: public, max-age=31536000, immutable
+
+      # If you ever move rendering to a Worker + OffscreenCanvas,
+      # uncomment these two for cross-origin isolation:
+      # - path: "/"
+      #   name: Cross-Origin-Opener-Policy
+      #   value: same-origin
+      # - path: "/"
+      #   name: Cross-Origin-Embedder-Policy
+      #   value: require-corp
