@@ -1,0 +1,25 @@
+services:
+  - type: static
+    name: matrix
+    env: static
+    branch: main
+    # If you have NO build step:
+    buildCommand: ""
+    publishPath: /
+    # If you DO have a build (uncomment these two and adjust):
+    # buildCommand: npm ci && npm run build
+    # publishPath: dist
+
+    autoDeploy: true
+
+    # Optional headers (good caching for assets)
+    headers:
+      - path: "*.js"
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: "*.css"
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: "*.png"
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
